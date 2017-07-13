@@ -1,18 +1,11 @@
 import { combineReducers } from 'redux'
-import locationReducer from './location'
+import messagesReducer from './reducers/messages'
+import authReducer from './reducers/auth'
+import redirectReducer from './reducers/redirect'
 
-export const makeRootReducer = (asyncReducers) => {
-  return combineReducers({
-    location: locationReducer,
-    ...asyncReducers
-  })
-}
-
-export const injectReducer = (store, { key, reducer }) => {
-  if (Object.hasOwnProperty.call(store.asyncReducers, key)) return
-
-  store.asyncReducers[key] = reducer
-  store.replaceReducer(makeRootReducer(store.asyncReducers))
-}
-
-export default makeRootReducer
+export default asyncReducers => combineReducers({
+  messages: messagesReducer,
+  auth: authReducer,
+  redirect: redirectReducer,
+  ...asyncReducers
+})

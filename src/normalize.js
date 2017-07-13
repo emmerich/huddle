@@ -25,6 +25,7 @@ Object.assign = require('object-assign')
 // 2) Promise
 // ------------------------------------
 if (typeof Promise === 'undefined') {
+  /* eslint-disable global-require */
   require('promise/lib/rejection-tracking').enable()
   window.Promise = require('promise/lib/es6-extensions.js')
 }
