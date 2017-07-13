@@ -1,4 +1,3 @@
-import { newMessage } from '../store/reducers/messages'
 import { authUpdated } from '../store/reducers/auth'
 
 const CONFIG = {
@@ -18,8 +17,6 @@ const init = async store => new Promise((resolve) => {
     resolve()
     store.dispatch(authUpdated(user))
   })
-
-  firebase.database().ref('messages').on('child_added', data => store.dispatch(newMessage(data.val())))
 })
 
 export default init

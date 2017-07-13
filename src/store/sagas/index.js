@@ -1,17 +1,35 @@
-// import { takeEvery, call, put } from 'redux-saga/effects'
-// import { authUpdated, TRY_TO_AUTH } from '../reducers/auth'
-// import { redirect } from '../reducers/redirect'
+// import { takeEvery, put } from 'redux-saga/effects'
+// import { AUTH_UPDATED } from '../reducers/auth'
+// import { newChannel } from '../reducers/channels'
 //
-// function* tryToAuth(action) {
-//   // const user = yield call(doAuth)
-//   //
-//   // // Don't actually do anything cause firebase will pick it up.
-//   // yield put(authUpdated(user))
-//   // yield put(redirect(action.redirect))
+// let subscribed = false
+
+// function subscribeToFirebase(action) {
+//   if (subscribed) {
+//     return
+//   }
+//
+//   if (action.user !== null) {
+//     subscribed = true
+//
+//     // Subscribe
+//     const db = firebase.database()
+//     const userId = action.user.uid
+//     const dbRef = `/channels/${userId}`
+//
+//     console.log(`Subscribing to ${dbRef}`)
+//     db.ref(dbRef).on('child_added', data => {
+//       const _action = newChannel(data.val())
+//       console.log('new channel 1', data.val(), _action)
+//       put(action)
+//     })
+//   }
+//
+//   // TODO if user changed?
 // }
 
 function* rootSaga() {
-  // yield takeEvery(TRY_TO_AUTH, tryToAuth)
+  // yield takeEvery(AUTH_UPDATED, subscribeToFirebase)
 }
 
 export default rootSaga

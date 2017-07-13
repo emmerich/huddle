@@ -1,3 +1,3 @@
 import React from 'react'
 
-export default () => <div>Home</div>
+export default ({ channels }) => <div>Channels: {channels.map(c => <div>{c.name}</div>)}</div>

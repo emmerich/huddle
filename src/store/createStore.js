@@ -3,12 +3,14 @@ import thunk from 'redux-thunk'
 import createSagaMiddleware from 'redux-saga'
 import makeRootReducer from './reducers'
 import sagas from './sagas'
+import firebaseSaga from './sagas/firebase'
 
 const createStore = (initialState = {}) => {
   // ======================================================
   // Middleware Configuration
   // ======================================================
   const sagaMiddleware = createSagaMiddleware()
+
   const middleware = [thunk, sagaMiddleware]
 
   // ======================================================
@@ -36,6 +38,7 @@ const createStore = (initialState = {}) => {
   )
 
   sagaMiddleware.run(sagas)
+  sagaMiddleware.run(firebaseSaga(store))
   store.asyncReducers = {}
 
   if (module.hot) {
