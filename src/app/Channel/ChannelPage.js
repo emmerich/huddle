@@ -4,26 +4,39 @@ import PropTypes from 'prop-types'
 export default class Channel extends React.Component {
 
   static propTypes = {
-    sendMessage: PropTypes.func.isRequired,
     channelKey: PropTypes.string.isRequired,
     channel: PropTypes.shape({
       name: PropTypes.string.isRequired
     }).isRequired,
     messages: PropTypes.shape.isRequired,
-    users: PropTypes.shape.isRequired
+    users: PropTypes.shape.isRequired,
+
+    sendMessage: PropTypes.func.isRequired,
+    loadChannel: PropTypes.func.isRequired,
+    unloadChannel: PropTypes.func.isRequired
   }
 
   state = { text: '' }
 
-  sendMessage() {
+  componentDidMount() {
+    this.props.loadChannel(this.props.channelKey)
+  }
+
+  componentWillUnmount() {
+    this.props.unloadChannel(this.props.channelKey)
+  }
+
+  onSubmit = (e) => {
+    e.preventDefault()
     this.props.sendMessage(this.props.channelKey, this.state.text)
     this.setState({ text: '' })
+    return false
   }
 
   render() {
     const { channel, messages, users } = this.props
 
-    if(!channel) {
+    if (!channel) {
       return <div>Loading..</div>
     }
 
@@ -34,8 +47,10 @@ export default class Channel extends React.Component {
           <li>{messages[key].text}</li>
         ))}
       </ul>
-      <input type="text" value={this.state.text} onChange={event => this.setState({ text: event.target.value })} />
-      <input type="button" onClick={() => this.sendMessage()} value="Send" />
+      <form onSubmit={this.onSubmit}>
+        <input type="text" value={this.state.text} onChange={event => this.setState({ text: event.target.value })} />
+        <input type="submit" value="Send" />
+      </form>
     </div>)
   }
 }

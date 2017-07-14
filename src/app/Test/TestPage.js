@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default class Test extends React.Component {
+export default class extends React.Component {
 
   state = {
     id: null,
@@ -27,7 +27,7 @@ export default class Test extends React.Component {
   }
 
   leaveChannel() {
-    this.messagesRefs.forEach(ref => ref.off('child_added'))
+    this.messageRefs.forEach(ref => ref.off('child_added'))
     fetch(`/leave?user=${this.state.id}`)
     this.setState({ connected: false, messages: [] })
   }

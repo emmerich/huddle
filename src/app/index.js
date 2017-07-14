@@ -6,19 +6,17 @@ import {
 } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import PropTypes from 'prop-types'
-import Home from './Home'
+import Dashboard from './Dashboard'
 import Test from './Test'
-import AuthenticatedRoute from './AuthenticatedRoute'
-import RedirectRoute from './RedirectRoute'
-import AdminRoute from './AdminRoute'
 import Login from './Login'
 import Channel from './Channel'
+import AuthenticatedRoute from '../components/AuthenticatedRoute'
+import RedirectRoute from '../components/RedirectRoute'
+import AdminRoute from '../components/AdminRoute'
 
-
-class App extends React.Component {
+export default class extends React.Component {
   static propTypes = {
-    /* eslint-disable react/forbid-prop-types */
-    store: PropTypes.object.isRequired
+    store: PropTypes.shape.isRequired
   }
 
   shouldComponentUpdate() {
@@ -29,16 +27,16 @@ class App extends React.Component {
     return (
       <Provider store={this.props.store}>
         <Router>
-          <div className="container text-center">
+          <div>
             <h1>React Redux Starter Kit</h1>
 
             <Link to="/">Home</Link>
 
-            <div className="page-layout__viewport">
+            <div>
               <RedirectRoute path="/" />
               <Route exact path="/login" component={Login} />
 
-              <AuthenticatedRoute exact path="/" component={Home} />
+              <AuthenticatedRoute exact path="/" component={Dashboard} />
               <AuthenticatedRoute path="/channel/:id" component={Channel} />
 
               <AdminRoute path="/test" component={Test} />
@@ -49,5 +47,3 @@ class App extends React.Component {
     )
   }
 }
-
-export default App

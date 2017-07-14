@@ -2,9 +2,10 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import createStore from './store/createStore'
 import { authUpdated } from './store/reducers/auth'
-import './styles/main.scss';
+import App from './app'
 
-(async () => {
+/* eslint-disable import/newline-after-import */
+;(async () => {
   const store = createStore(window.__INITIAL_STATE__)
 
   await new Promise(resolve => window.firebase.auth().onAuthStateChanged((user) => {
@@ -15,9 +16,6 @@ import './styles/main.scss';
   const MOUNT_NODE = document.getElementById('root')
 
   let render = () => {
-    /* eslint-disable global-require */
-    const App = require('./components/App').default
-
     ReactDOM.render(
       <App store={store} />,
       MOUNT_NODE
@@ -45,7 +43,7 @@ import './styles/main.scss';
 
       // Setup hot module replacement
       module.hot.accept([
-        './components/App'
+        './app'
       ], () =>
         setImmediate(() => {
           ReactDOM.unmountComponentAtNode(MOUNT_NODE)

@@ -1,10 +1,13 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { sendMessage } from '../../store/reducers/messages'
-import Channel from './Channel'
+import { loadChannel, unloadChannel } from '../../store/reducers/channels'
+import ChannelPage from './ChannelPage'
 
 const mapDispatchToProps = {
-  sendMessage
+  sendMessage,
+  loadChannel,
+  unloadChannel
 }
 
 const mapStateToProps = (state, props) => ({
@@ -14,4 +17,4 @@ const mapStateToProps = (state, props) => ({
   users: state.users[props.match.params.id] || {}
 })
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Channel))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ChannelPage))

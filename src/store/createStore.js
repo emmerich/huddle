@@ -6,16 +6,9 @@ import sagas from './sagas'
 import firebaseSaga from './sagas/firebase'
 
 const createStore = (initialState = {}) => {
-  // ======================================================
-  // Middleware Configuration
-  // ======================================================
   const sagaMiddleware = createSagaMiddleware()
-
   const middleware = [thunk, sagaMiddleware]
 
-  // ======================================================
-  // Store Enhancers
-  // ======================================================
   const enhancers = []
   let composeEnhancers = compose
 
@@ -25,9 +18,6 @@ const createStore = (initialState = {}) => {
     }
   }
 
-  // ======================================================
-  // Store Instantiation and HMR Setup
-  // ======================================================
   const store = createReduxStore(
     makeRootReducer(),
     initialState,

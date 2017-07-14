@@ -23,6 +23,7 @@
     "react/prefer-stateless-function": "off",
     "react/no-multi-comp": "off",
     "no-underscore-dangle": "off",
-    "comma-dangle": ["error", "never"]
+    "comma-dangle": ["error", "never"],
+    "camelcase": "off"
   }
 }

@@ -11,7 +11,7 @@ const UI_CONFIG = {
 }
 
 
-export default class Login extends React.Component {
+export default class extends React.Component {
   componentDidMount() {
     // Initialize the FirebaseUI Widget using Firebase.
     this.ui = new firebaseui.auth.AuthUI(firebase.auth())
