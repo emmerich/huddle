@@ -1,19 +1,17 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import createStore from './store/createStore'
-import initFirebase from './firebase/init'
+import { authUpdated } from './store/reducers/auth'
 import './styles/main.scss';
 
 (async () => {
-  // Store Initialization
-  // ------------------------------------
   const store = createStore(window.__INITIAL_STATE__)
 
-  // Firebase Initialization
-  await initFirebase(store)
+  await new Promise(resolve => window.firebase.auth().onAuthStateChanged((user) => {
+    store.dispatch(authUpdated(user))
+    resolve()
+  }))
 
-  // Render Setup
-  // ------------------------------------
   const MOUNT_NODE = document.getElementById('root')
 
   let render = () => {
@@ -26,8 +24,6 @@ import './styles/main.scss';
     )
   }
 
-  // Development Tools
-  // ------------------------------------
   if (__DEV__) {
     if (module.hot) {
       const renderApp = render

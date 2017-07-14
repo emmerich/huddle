@@ -4,7 +4,9 @@ import Home from './Home'
 
 const mapDispatchToProps = {}
 const mapStateToProps = state => ({
-  channels: state.channels
+  channels: state.channels,
+  messages: state.messages,
+  users: state.users
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Home))

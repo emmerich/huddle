@@ -14,37 +14,37 @@ const __PROD__ = project.env === 'production'
 const config = {
   entry: {
     normalize: [
-      inProjectSrc('normalize'),
+      inProjectSrc('normalize')
     ],
     main: [
-      inProjectSrc(project.main),
-    ],
+      inProjectSrc(project.main)
+    ]
   },
   devtool: project.sourcemaps ? 'source-map' : false,
   output: {
     path: inProject(project.outDir),
     filename: __DEV__ ? '[name].js' : '[name].[chunkhash].js',
-    publicPath: project.publicPath,
+    publicPath: project.publicPath
   },
   resolve: {
     modules: [
       inProject(project.srcDir),
-      'node_modules',
+      'node_modules'
     ],
-    extensions: ['*', '.js', '.jsx', '.json'],
+    extensions: ['*', '.js', '.jsx', '.json']
   },
   externals: project.externals,
   module: {
-    rules: [],
+    rules: []
   },
   plugins: [
     new webpack.DefinePlugin(Object.assign({
       'process.env': { NODE_ENV: JSON.stringify(project.env) },
       __DEV__,
       __TEST__,
-      __PROD__,
+      __PROD__
     }, project.globals))
-  ],
+  ]
 }
 
 // JavaScript
@@ -64,28 +64,28 @@ config.module.rules.push({
           {
             helpers: true,
             polyfill: false, // we polyfill needed features in src/normalize.js
-            regenerator: true,
-          },
+            regenerator: true
+          }
         ],
         [
           'babel-plugin-transform-object-rest-spread',
           {
             useBuiltIns: true // we polyfill Object.assign in src/normalize.js
-          },
-        ],
+          }
+        ]
       ],
       presets: [
         'babel-preset-react',
         ['babel-preset-env', {
           modules: false,
           targets: {
-            ie9: true,
+            ie9: true
           },
-          uglify: true,
-        }],
+          uglify: true
+        }]
       ]
-    },
-  }],
+    }
+  }]
 })
 
 // Styles
@@ -93,7 +93,7 @@ config.module.rules.push({
 const extractStyles = new ExtractTextPlugin({
   filename: 'styles/[name].[contenthash].css',
   allChunks: true,
-  disable: __DEV__,
+  disable: __DEV__
 })
 
 config.module.rules.push({
@@ -109,29 +109,29 @@ config.module.rules.push({
             autoprefixer: {
               add: true,
               remove: true,
-              browsers: ['last 2 versions'],
+              browsers: ['last 2 versions']
             },
             discardComments: {
-              removeAll : true,
+              removeAll: true
             },
             discardUnused: false,
             mergeIdents: false,
             reduceIdents: false,
             safe: true,
-            sourcemap: project.sourcemaps,
-          },
-        },
+            sourcemap: project.sourcemaps
+          }
+        }
       },
       {
         loader: 'sass-loader',
         options: {
           sourceMap: project.sourcemaps,
           includePaths: [
-            inProjectSrc('styles'),
-          ],
-        },
+            inProjectSrc('styles')
+          ]
+        }
       }
-    ],
+    ]
   })
 })
 config.plugins.push(extractStyles)
@@ -139,11 +139,11 @@ config.plugins.push(extractStyles)
 // Images
 // ------------------------------------
 config.module.rules.push({
-  test    : /\.(png|jpg|gif)$/,
-  loader  : 'url-loader',
-  options : {
-    limit : 8192,
-  },
+  test: /\.(png|jpg|gif)$/,
+  loader: 'url-loader',
+  options: {
+    limit: 8192
+  }
 })
 
 // Fonts
@@ -154,19 +154,19 @@ config.module.rules.push({
   ['otf', 'font/opentype'],
   ['ttf', 'application/octet-stream'],
   ['eot', 'application/vnd.ms-fontobject'],
-  ['svg', 'image/svg+xml'],
+  ['svg', 'image/svg+xml']
 ].forEach((font) => {
   const extension = font[0]
   const mimetype = font[1]
 
   config.module.rules.push({
-    test    : new RegExp(`\\.${extension}$`),
-    loader  : 'url-loader',
-    options : {
-      name  : 'fonts/[name].[ext]',
-      limit : 10000,
-      mimetype,
-    },
+    test: new RegExp(`\\.${extension}$`),
+    loader: 'url-loader',
+    options: {
+      name: 'fonts/[name].[ext]',
+      limit: 10000,
+      mimetype
+    }
   })
 })
 
@@ -176,8 +176,8 @@ config.plugins.push(new HtmlWebpackPlugin({
   template: inProjectSrc('index.html'),
   inject: true,
   minify: {
-    collapseWhitespace: true,
-  },
+    collapseWhitespace: true
+  }
 }))
 
 // Development Tools
@@ -210,7 +210,7 @@ if (__PROD__) {
   config.plugins.push(
     new webpack.LoaderOptionsPlugin({
       minimize: true,
-      debug: false,
+      debug: false
     }),
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: !!config.devtool,
@@ -225,8 +225,8 @@ if (__PROD__) {
         dead_code: true,
         evaluate: true,
         if_return: true,
-        join_vars: true,
-      },
+        join_vars: true
+      }
     })
   )
 }

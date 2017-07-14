@@ -1,5 +1,3 @@
-import { authUpdated } from '../store/reducers/auth'
-
 const CONFIG = {
   apiKey: 'AIzaSyCgaldWWVvaeZ8cjl1JF83sZ69p6jxrMz0',
   authDomain: 'huddle-300a5.firebaseapp.com',
@@ -9,14 +7,6 @@ const CONFIG = {
   messagingSenderId: '823928664801'
 }
 
-const init = async store => new Promise((resolve) => {
-  // Firebase Initialization
-  firebase.initializeApp(CONFIG)
-
-  firebase.auth().onAuthStateChanged((user) => {
-    resolve()
-    store.dispatch(authUpdated(user))
-  })
-})
+const init = () => firebase.initializeApp(CONFIG)
 
 export default init

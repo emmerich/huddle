@@ -1,0 +1,19 @@
+{
+  "hosting": {
+    "public": "dist",
+    "rewrites": [
+      {
+        "source": "/join",
+        "function": "join"
+      },
+      {
+        "source": "/leave",
+        "function": "leave"
+      },
+      {
+        "source": "**",
+        "destination": "index.html"
+      }
+    ]
+  }
+}
